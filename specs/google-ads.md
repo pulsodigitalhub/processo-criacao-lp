@@ -19,8 +19,19 @@ Contrato minimo para Landing Pages destinadas a campanhas pagas (Google Ads, Met
 
 - GA4 ou GTM configurado antes do deploy, nao depois.
 - Evento de conversao (form_submit, whatsapp_click, phone_click quando aplicavel) testado com o proprio DevTools antes de ligar a campanha.
-- Se o CTA leva a WhatsApp, intermediar por uma bridge page ou handler que dispare o evento antes de abrir `wa.me`. Nao usar `wa.me` como `href` direto.
+- Se o CTA leva a WhatsApp: usar um handler de clique que empurra o evento pro `dataLayer` e **em seguida** navega para `wa.me`/`api.whatsapp.com`. O `href` do link continua sendo o destino final real (`https://wa.me/<numero>`), para que a falha do JS leve a pessoa ao WhatsApp e nao a um erro.
+- **Proibido** apontar o `href` para redirecionador de terceiro ou dominio proprio de tracking (`.../go/...`, encurtadores, bridge externa). Cross-domain redirect a partir do anuncio e classificado como *destination mismatch* e *circumventing systems*, e a penalidade e suspensao da conta sem aviso previo.
+- **Proibido** criar pagina intersticial com `noindex` + redirecionamento automatico (`window.location`, `<meta http-equiv="refresh">`). Essa combinacao e a assinatura de *sneaky redirect*.
+- **Proibido** listar qualquer pagina de redirecionamento no `sitemap.xml` — isso entrega o padrao diretamente ao rastreador do Google.
 - Google Tag ou Meta Pixel disparando pageview e evento de conversao. Verificar em Tag Assistant ou equivalente.
+
+## Por que estas regras existem
+
+Em 03/09/2026 a conta de Google Ads de um cliente foi suspensa por phishing. A LP seguia a redacao anterior desta spec, que mandava "intermediar por uma bridge page". A implementacao escolhida foi um redirecionador de terceiro (`sistema.pulso.marketing/go/<cliente>`) no `href` de 100 links, mais uma pagina `/agendar/` com `noindex` e `window.location` automatico, listada no `sitemap.xml`. Os tres elementos juntos sao exatamente o padrao que o Google classifica como redirecionamento enganoso.
+
+O redirecionador ainda estava retornando HTTP 502 quando o incidente foi investigado, ou seja: alem do padrao suspeito, o destino estava quebrado.
+
+Licao: o evento de conversao pode e deve ser disparado por handler no proprio dominio. Nao existe motivo tecnico para tirar o usuario do dominio anunciado antes de entregar ele no destino prometido.
 
 ## Consentimento e Consent Mode v2
 
@@ -109,3 +120,10 @@ UTMs e `gclid` viajam pela URL, nao dependem de cookie. Mesmo com consent negado
 - [ ] Rejeitar dispara `update` com denied; DevTools confirma requests para `google.com/ccm/collect` com `_p=1` (cookieless pings), sem `cid`/`sid`.
 - [ ] Politica de Privacidade tem botao "Gerenciar preferencias" que reabre o banner.
 - [ ] Terceiros fora do consent mode nativo (Clarity, Meta Pixel etc.) tem chamada propria no handler.
+- [ ] Nenhum `href` de ancora aponta para dominio de terceiro fora da allowlist (`wa.me`, `api.whatsapp.com`, mapa, redes do cliente).
+- [ ] Nenhum link interno aponta para arquivo inexistente no output do build.
+- [ ] Nenhuma pagina combina `noindex` com redirecionamento automatico.
+- [ ] `sitemap.xml` nao lista pagina de redirecionamento nem URL inexistente.
+- [ ] Politica de privacidade linkada e hospedada no proprio dominio anunciado.
+- [ ] `robots.txt` nao bloqueia `AdsBot-Google`.
+- [ ] `scripts/check-google-ads-compliance.mjs` rodou e retornou `RESULTADO: PASS`.

@@ -50,6 +50,21 @@ Checklists tornam a revisao repetivel. Eles nao substituem julgamento, mas imped
 - Metadados, indexacao e schema seguem o objetivo da pagina.
 - Se a LP mora em repo proprio do cliente: `scripts/generate-sitemap.mjs` + `.github/workflows/sitemap.yml` + `sitemap.xsl` estao configurados, com o dominio de producao real (nao o subdominio da Vercel) confirmado por canonical/og:url ao vivo — ver `AGENTS.md` §"Ao construir a LP".
 
+## Compliance Google Ads
+
+Verificado por `scripts/check-google-ads-compliance.mjs`, nao por leitura manual. Rodar sobre o output publicado, nao sobre a fonte que se acha que foi publicada.
+
+**Bloqueantes** (reprovam a entrega):
+
+- Nenhum `href` de ancora aponta para dominio de terceiro fora da allowlist (`wa.me`, `api.whatsapp.com`, mapa, redes do cliente). Redirecionador proprio ou de fornecedor no `href` e *destination mismatch*.
+- Nenhum link interno aponta para arquivo que nao existe no output do build.
+- Nenhuma pagina combina `noindex` com redirecionamento automatico (assinatura de *sneaky redirect*).
+- `sitemap.xml` nao lista pagina de redirecionamento nem URL inexistente.
+- Toda pagina linka politica de privacidade, hospedada no proprio dominio anunciado.
+- `robots.txt` nao bloqueia `AdsBot-Google`.
+
+**Avisos** (nao reprovam, mas vao registrados): Consent Mode v2 ausente ou depois do GTM, `noindex` em producao, metadados basicos faltando (`lang`, viewport, `title`, description).
+
 ## Regra de saida
 
 Uma LP nao esta pronta porque o layout parece completo. Ela esta pronta quando o checklist foi revisado sobre a versao final e as pendencias restantes estao registradas de forma explicita.
