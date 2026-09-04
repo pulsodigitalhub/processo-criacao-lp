@@ -33,6 +33,25 @@ try {
 const ROOT = process.cwd();
 const EXCLUDE = new Set(['node_modules', 'dist', '.git', 'src', '.github', '.vercel', '.next']);
 
+// Rotas utilitarias que redirecionam e nao devem ser entregues ao rastreador.
+// Declarado pelo repo porque, em SPA, o redirect vive no bundle JS e nao no HTML.
+// Uso: SITEMAP_EXCLUDE="agendar,direcionamento,obg-wpp"
+const ROTAS_EXCLUIDAS = new Set(
+  (process.env.SITEMAP_EXCLUDE || '')
+    .split(',')
+    .map((r) => r.trim().replace(/^\/+|\/+$/g, ''))
+    .filter(Boolean)
+);
+
+function rotaExcluida(rota) {
+  const limpa = rota.replace(/^\/+|\/+$/g, '');
+  if (!limpa) return false;
+  for (const excluida of ROTAS_EXCLUIDAS) {
+    if (limpa === excluida || limpa.endsWith(`/${excluida}`)) return true;
+  }
+  return false;
+}
+
 function findPages(dir, base) {
   const routes = [];
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
@@ -82,7 +101,9 @@ function toUrl(r) {
 
 const sorted = [...routes].sort();
 const base = BASE_URL.replace(/\/$/, '');
+const excluidas = sorted.filter(rotaExcluida);
 const urls = sorted
+  .filter((r) => !rotaExcluida(r))
   .map((r) => `  <url>\n    <loc>${esc(base + toUrl(r))}</loc>\n  </url>`)
   .join('\n');
 const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`;
@@ -91,5 +112,6 @@ const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<?xml-stylesheet type="text
 const outDir = fs.existsSync(path.join(ROOT, 'public')) ? path.join(ROOT, 'public') : ROOT;
 const outPath = path.join(outDir, 'sitemap.xml');
 fs.writeFileSync(outPath, xml);
-console.log(`sitemap.xml gerado com ${sorted.length} rota(s) em ${path.relative(ROOT, outPath)}`);
-sorted.forEach((r) => console.log(`  ${base}${toUrl(r)}`));
+console.log(`sitemap.xml gerado com ${sorted.length - excluidas.length} rota(s) em ${path.relative(ROOT, outPath)}`);
+excluidas.forEach((r) => console.log(`excluida do sitemap: ${r}`));
+sorted.filter((r) => !rotaExcluida(r)).forEach((r) => console.log(`  ${base}${toUrl(r)}`));
