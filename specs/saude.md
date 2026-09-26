@@ -38,7 +38,7 @@ Icone em card de sintoma/causa/cuidado comunica dominio clinico. Icone errado (p
 ## Conversao
 
 - CTA primario e uma acao de contato ou agendamento, nao venda direta.
-- Formulario de contato coleta somente dados necessarios para o agendamento. LGPD: politica de privacidade e consentimento antes de submit.
+- Formulario de contato coleta somente dados necessarios para o agendamento. LGPD: politica de privacidade e consentimento antes de submit. Telefone limitado a 10 ou 11 digitos (ver `specs/google-ads.md`, "Campo de telefone").
 - Canal direto (WhatsApp, telefone) pode aparecer em LP organica. Em LP de Ads, seguir `specs/google-ads.md`.
 
 ## Gates

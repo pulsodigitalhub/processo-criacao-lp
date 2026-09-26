@@ -13,7 +13,50 @@ Contrato minimo para Landing Pages destinadas a campanhas pagas (Google Ads, Met
 - Um unico CTA primario por LP. CTAs secundarios podem existir, mas nao podem competir por atencao no primeiro viewport.
 - **Rodape sem telefone, WhatsApp direto, e-mail ou qualquer canal fora do CTA rastreado.** Toda conversao precisa passar por evento mensuravel. Um canal solto no rodape vaza conversao e destroi a atribuicao da campanha.
 - Formulario curto: nome, telefone e no maximo um campo condicional. Cada campo extra reduz CVR.
+- **Campo de telefone limitado a 10 ou 11 digitos** (DDD + 8 ou 9). Ver "Campo de telefone" abaixo.
 - Politica de privacidade linkada. Consentimento LGPD explicito antes do submit.
+
+## Campo de telefone
+
+Sem limite, o lead digita digito a mais ou a menos e o numero chega errado: o
+contato se perde depois de o clique ja ter sido pago. Todo campo de telefone de
+formulario segue esta regra, sem excecao:
+
+- So digitos, cortados em **11** (DDD 2 + 9 do celular). Colar um numero maior
+  tambem corta.
+- Aceita **10 ou 11** digitos: 10 = fixo, 11 = celular.
+- Mascara enquanto digita: `(61) 3322-1100` para 10, `(61) 99876-5432` para 11.
+- Validacao nativa no submit: `maxlength="15"` (11 digitos + mascara) e
+  `pattern="\([0-9]{2}\) [0-9]{4,5}-[0-9]{4}"`. Com menos de 10 digitos o
+  navegador barra o envio.
+
+HTML:
+
+```html
+<input type="tel" name="telefone" autocomplete="tel" inputmode="tel"
+  placeholder="(61) 99999-9999" maxlength="15"
+  pattern="\([0-9]{2}\) [0-9]{4,5}-[0-9]{4}"
+  title="DDD + telefone (10 ou 11 digitos)" data-phone-mask required>
+```
+
+JS (mascara):
+
+```js
+function formatPhone(value) {
+  const d = value.replace(/\D/g, "").slice(0, 11);
+  if (d.length <= 2) return d;
+  if (d.length <= 6) return `(${d.slice(0, 2)}) ${d.slice(2)}`;
+  if (d.length <= 10) return `(${d.slice(0, 2)}) ${d.slice(2, 6)}-${d.slice(6)}`;
+  return `(${d.slice(0, 2)}) ${d.slice(2, 7)}-${d.slice(7)}`;
+}
+document.querySelectorAll("[data-phone-mask]").forEach((i) =>
+  i.addEventListener("input", () => { i.value = formatPhone(i.value); }));
+```
+
+Em React, o mesmo `formatPhone` no `onChange` com o input controlado.
+
+Teste antes de entregar: digitar ou colar 14 digitos (fica em 11), enviar com 6
+(barra), enviar com 10 e com 11 (passa).
 
 ## Tracking
 
@@ -111,6 +154,7 @@ UTMs e `gclid` viajam pela URL, nao dependem de cookie. Mesmo com consent negado
 - [ ] Titulo do hero faz message match com o anuncio.
 - [ ] CTA primario e unico e visivel no primeiro viewport.
 - [ ] Rodape nao contem telefone, WhatsApp ou canal direto sem tracking.
+- [ ] Campo de telefone corta em 11 digitos e so aceita 10 ou 11 (ver "Campo de telefone").
 - [ ] Evento de conversao configurado e testado.
 - [ ] LCP mobile abaixo de 2,5s.
 - [ ] Politica de privacidade linkada.
