@@ -15,6 +15,7 @@
 ## Desenvolvimento
 
 - [ ] Formularios, links e CTAs foram testados.
+- [ ] Telefone do formulario: maximo 11 digitos, aceita 10 ou 11 (`specs/google-ads.md`, "Campo de telefone").
 - [ ] Eventos de conversao foram validados.
 - [ ] Controlador, canal de privacidade e URL da politica foram confirmados com o cliente.
 - [ ] A politica explica tecnologias de tracking e como revisar preferencias, quando aplicavel.
