@@ -15,6 +15,14 @@ Contrato minimo para Landing Pages destinadas a campanhas pagas (Google Ads, Met
 - Formulario curto: nome, telefone e no maximo um campo condicional. Cada campo extra reduz CVR.
 - Politica de privacidade linkada. Consentimento LGPD explicito antes do submit.
 
+## Navegacao e CTA no mobile
+
+Regra criada em 27/10/2026, na LP do Dr. Breno Lima, a pedido do Sergio. Vale para toda LP que recebe trafego pago.
+
+- **Barra de CTA fixa no rodape do mobile (ate 900px).** Um botao de largura total com o CTA primario, sempre visivel durante a rolagem, passando pelo mesmo handler rastreado dos outros CTAs (nunca `wa.me` direto). Altura minima 52px, respeitando `env(safe-area-inset-bottom)`. O `body` ganha `padding-bottom` para a barra nao cobrir o fim da pagina, e o banner de cookies sobe para ficar acima dela.
+- **Menu do topo tambem no mobile.** O header nao esconde a navegacao no celular: botao de menu de 44x44px, que abre a lista de ancoras das secoes e fecha ao tocar num item. O botao de CTA do header continua visivel ao lado.
+- A barra fixa nao substitui os CTAs das secoes; ela garante que o visitante nunca precise rolar para encontrar como agendar.
+
 ## Tracking
 
 - GA4 ou GTM configurado antes do deploy, nao depois.
@@ -100,6 +108,8 @@ UTMs e `gclid` viajam pela URL, nao dependem de cookie. Mesmo com consent negado
 - [ ] Titulo do hero faz message match com o anuncio.
 - [ ] CTA primario e unico e visivel no primeiro viewport.
 - [ ] Rodape nao contem telefone, WhatsApp ou canal direto sem tracking.
+- [ ] Mobile: barra de CTA fixa no rodape, visivel durante a rolagem, com o handler rastreado.
+- [ ] Mobile: menu do topo acessivel por botao de 44px.
 - [ ] Evento de conversao configurado e testado.
 - [ ] LCP mobile abaixo de 2,5s.
 - [ ] Politica de privacidade linkada.
