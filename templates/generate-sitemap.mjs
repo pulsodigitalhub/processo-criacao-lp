@@ -31,7 +31,7 @@ try {
 }
 
 const ROOT = process.cwd();
-const EXCLUDE = new Set(['node_modules', 'dist', '.git', 'src', '.github', '.vercel', '.next']);
+const EXCLUDE = new Set(['node_modules', 'dist', '.git', 'src', '.github', '.vercel', '.next', 'docs', 'scripts']);
 
 function findPages(dir, base) {
   const routes = [];
