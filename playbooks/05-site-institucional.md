@@ -6,21 +6,20 @@ Status: vigente desde 29/10/2026. Origem: LP do Dr. Breno Lima e as LPs do Pedro
 
 Decisão do Sérgio em 29/10/2026: o site institucional é uma subpágina em `/institucional/`, dentro do mesmo repositório e do mesmo domínio da LP.
 
-É uma cópia da LP geral de campanhas com três diferenças.
+É uma cópia exata da LP geral de campanhas. Todas as seções ficam, na mesma ordem, inclusive a faixa de números. Não se tira seção nenhuma. Mudam só duas coisas.
 
-1. Não tem formulário.
-2. Não tem webhook.
-3. Todos os CTAs levam diretamente ao WhatsApp do médico ou da clínica.
+1. O título e o H1, que passam a ser o nome do médico, como no institucional do Dr. Pedro.
+2. O endereçamento. Não há formulário nem webhook, e todo CTA vira link direto para o WhatsApp do médico ou da clínica, com mensagem pronta e a unidade quando o botão for de unidade.
 
 Este é o único local em que `wa.me` direto é permitido, pois o institucional não é destino de anúncio.
 
-Ele entra no Link HUB como botão "Institucional", do tipo site. Gerar a página a partir da página principal, como as variações.
+Ele entra no Link HUB como botão "Institucional", do tipo site. É gerado pelo mesmo script das variações, a partir da página principal, para nunca ficar diferente da LP. Referência: pulsodigitalhub/lp-dr-breno-lima, scripts/gerar_variacoes.py, função render_institucional.
 
-## Exceção registrada
+## O que não é institucional
 
-O Dr. Breno Lima tem um institucional próprio, com conteúdo expandido e formulário. Ele é mantido como está por decisão do Sérgio.
+Os sites do Rodrigo e do Matheus, `site-dr-*`, são migrações de WordPress em repositórios e domínios próprios. Não são o padrão para cliente novo.
 
-Não confundir com os sites do Rodrigo e do Matheus, `site-dr-*`. Eles são migrações de WordPress em repositórios e domínios próprios, e não são o padrão para cliente novo.
+Em 29/10/2026 a primeira versão do institucional do Breno foi feita como página nova, com conteúdo expandido e sem a faixa de números. Estava errada e foi refeita como cópia da LP.
 
 ## Checado pelo gate
 
