@@ -8,8 +8,10 @@ Decisão do Sérgio em 29/10/2026: o site institucional é uma subpágina em `/i
 
 É uma cópia exata da LP geral de campanhas. Todas as seções ficam, na mesma ordem, inclusive a faixa de números. Não se tira seção nenhuma. Mudam só duas coisas.
 
-1. O título e o H1, que passam a ser o nome do médico, como no institucional do Dr. Pedro.
+1. Só a tag <title> da página, com o nome do médico. O H1 continua o mesmo da LP (no Breno, "Ortopedista e Médico da Dor").
 2. O endereçamento. Não há formulário nem webhook, e todo CTA vira link direto para o WhatsApp do médico ou da clínica, com mensagem pronta e a unidade quando o botão for de unidade.
+
+Variante do Dr. Breno: o seletor de convênio e unidade da LP continua, mas sem nome, telefone nem webhook. Ao escolher a unidade, abre o WhatsApp com convênio e unidade na mensagem (atributo data-agendamento="whatsapp" no html, tratado em assets/agendamento.js).
 
 Este é o único local em que `wa.me` direto é permitido, pois o institucional não é destino de anúncio.
 
