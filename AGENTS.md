@@ -18,6 +18,8 @@ Este repo documenta o processo para criar Landing Pages. Se voce foi invocado pa
    Depois da LP aprovada, `ferramentas/promover-conceitos.py` propoe o que devolver para a base (nao escreve; imprime o diff).
 7. Preencha `templates/visual-map.md` antes do layout. Use IDs concretos de `visual-repertorio/` quando existirem; se ainda nao existirem, registre a decisao visual em prosa curta.
 
+Antes de começar, leia playbooks/README.md. Os playbooks dizem o que a Pulso entrega por cliente e os padrões repetidos, seções, componentes, variações, institucional, publicação e fechamento.
+
 ## Ao construir a LP
 
 - **Comece de `assets/tokens.css`.** Nao reinvente paleta, tipografia, escala tipografica ou radius do zero. Cada override do token base precisa de justificativa registrada no mapa visual.
