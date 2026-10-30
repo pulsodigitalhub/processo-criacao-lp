@@ -19,7 +19,7 @@ Status: vigente desde 29/10/2026. Origem: LP do Dr. Breno Lima e as LPs do Pedro
 7. Sobre o médico
    Usar foto diferente da foto do hero.
 8. Unidades
-   Um card por unidade, com mini mapa e CTA.
+   Um card por unidade, com mini mapa, horário de funcionamento e CTA. O horário é obrigatório e vem do GMN de cada clínica, por exemplo "Seg a sex, 8h às 18h · Sáb, 8h às 12h". É o horário da clínica, não o dia de atendimento do médico. Feriado no GMN pode esconder um dia da semana: conferir antes de publicar.
 9. Como funciona
    Cinco etapas, em linha no desktop e em carrossel no mobile.
 10. FAQ

@@ -13,7 +13,7 @@ Toda LP de anúncio deve ter os componentes abaixo.
 ## Formulário de agendamento
 
 1. Convênio com busca, com "Consulta particular" como primeira opção.
-2. Unidades que atendem aquele convênio, com botão "Agendar em <RA>".
+2. Unidades que atendem aquele convênio, com o horário de funcionamento de cada uma e botão "Agendar em <RA>". Mesmo horário dos cards de Unidades.
 3. Nome, WhatsApp e aceite da política de privacidade.
 4. Envio ao webhook `https://leads-clientes.sergioshouse.com.br/<cliente>`, com UTMs, gclid, gbraid e wbraid.
 5. Abertura do WhatsApp com mensagem pronta somente depois do envio.
