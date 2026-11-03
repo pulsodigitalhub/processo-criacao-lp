@@ -31,7 +31,7 @@ try {
 }
 
 const ROOT = process.cwd();
-const EXCLUDE = new Set(['node_modules', 'dist', '.git', 'src', '.github', '.vercel', '.next']);
+const EXCLUDE = new Set(['node_modules', 'dist', '.git', 'src', '.github', '.vercel', '.next', 'docs', 'scripts']);
 
 // Rotas utilitarias que redirecionam e nao devem ser entregues ao rastreador.
 // Declarado pelo repo porque, em SPA, o redirect vive no bundle JS e nao no HTML.
